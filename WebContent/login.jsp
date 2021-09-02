@@ -14,7 +14,7 @@
 	<c:choose>
 		<c:when test="${empty currentUser}">
 		<div class="content middle">
-			<p class="title big">Welcome to Auctions, the most original auction website on the Internet</p>
+			<p class="title big">Benvenuto su AsteOnline</p>
 			<p class="subtitle centered">Log in</p>
 			<c:url value="/login" var="loginUrl"/>			
 			<form method="post" action="${loginUrl}">
@@ -23,8 +23,8 @@
     				<input type="text" placeholder="Enter Username" name="username" required/>
     				<label for="password"><b>Password</b></label>
     				<input type="password" placeholder="Enter Password" name="password" required/>
-    				<button class="submit" name="website_choice" value="pureHTML" type="submit">Login to classic website</button>
-    				<button class="submit" name="website_choice" value="javascript" type="submit">Login to one page website</button>
+    				<button class="submit" name="website_choice" value="pureHTML" type="submit">Login al sito classico</button>
+    				<button class="submit" name="website_choice" value="javascript" type="submit">Login al sito RIA</button>
     				</div>
   			</form>	
   		</div>		
