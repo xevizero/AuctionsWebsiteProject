@@ -1,6 +1,6 @@
 (function() { 
 
-  var visAuctionsSave, content, mainDivs = [], mainController = new MainController(); 
+  var loggedUsername = "", visAuctionsSave, content, mainDivs = [], mainController = new MainController(); 
 	
   window.addEventListener("load", () => {
       mainController.start(); 
@@ -9,8 +9,13 @@
   function MainController() {
 	var self = this;
 	content = document.getElementById("content-div");
+	var jsheadertext = document.getElementById("jsheader_user").innerText;
+	if (jsheadertext.split(": ").length > 1){
+		loggedUsername = jsheadertext.split(": ")[1];
+	}
 	var buybutton = document.getElementById("buybutton");
 	var sellbutton = document.getElementById("sellbutton");
+	
 	buybutton.addEventListener("click", function(){
 		self.enterBuyMode();
 	});
@@ -18,12 +23,12 @@
 		self.enterSellMode();
 	});
 	this.start = function() {
-		if(getCookie("firstVisit") == ""){
-			setCookie("firstVisit", "true", 30);
+		if(getCookie("firstVisit"+loggedUsername) == ""){
+			setCookie("firstVisit"+loggedUsername, "true", 30);
 			this.enterBuyMode();
 			
 		}else{
-			if(getCookie("lastAction") == "createAuction"){
+			if(getCookie("lastAction"+loggedUsername) == "createAuction"){
 				this.enterSellMode();	
 			}else{
 				this.enterBuyMode();
@@ -60,7 +65,7 @@
 	}
 	
 	this.getVisitedAuctions = function() {
-      makeCall("GET", "getAuction?auctionId=" + getCookie("visitedAuctions"), null,
+      makeCall("GET", "getAuction?auctionId=" + getCookie("visitedAuctions"+loggedUsername), null,
         function(req) {
           if (req.readyState == 4) {
             if (req.status == 200) {
@@ -90,7 +95,7 @@
 	};
 	
 	this.searchAuctions = function(query){
-		setCookie("lastSearch", query, 30);
+		setCookie("lastSearch"+loggedUsername, query, 30);
 		makeCall("GET", "searchAuctions?searchQuery=" + query , null,
         function(req) {
           if (req.readyState == 4) {
@@ -110,7 +115,7 @@
 	
 	this.getAuction = function(auctionId, nonUserAuction){
 		if(nonUserAuction === true)
-			addToCookieList("visitedAuctions", auctionId, 30);
+			addToCookieList("visitedAuctions"+loggedUsername, auctionId, 30);
 		makeCall("GET", "getAuction?auctionId=" + auctionId , null,
         function(req) {
           if (req.readyState == 4) {
@@ -172,7 +177,7 @@
         function(req) {
           if (req.readyState == 4) {
             if (req.status == 200) {
-			setCookie("lastAction", "makeOffer", 30);
+			setCookie("lastAction"+loggedUsername, "makeOffer", 30);
               self.enterAuctionMode(auctionId);
             }
 			
@@ -188,7 +193,7 @@
         function(req) {
           if (req.readyState == 4) {
             if (req.status == 200) {
-				setCookie("lastAction", "closeAuction", 30);
+				setCookie("lastAction"+loggedUsername, "closeAuction", 30);
 				self.enterAuctionMode(auctionId);
             }
 			
@@ -203,7 +208,7 @@
         function(req) {
           if (req.readyState == 4) {
             if (req.status == 200) {
-				setCookie("lastAction", "createAuction", 30);
+				setCookie("lastAction"+loggedUsername, "createAuction", 30);
 				document.getElementById("activeDiv").remove();
 				var oldClosedDiv = document.getElementById("closedDiv");
 				var oldCreateDiv = document.getElementById("createDiv");
@@ -274,7 +279,7 @@
 				searchdiv.appendChild(divider2);
 				var searchsubtitle = document.createElement("p");
 				searchsubtitle.className  = "subtitle";
-				searchsubtitle.innerHTML = "Risultati per: " + getCookie("lastSearch");
+				searchsubtitle.innerHTML = "Risultati per: " + getCookie("lastSearch"+loggedUsername);
 				searchdiv.appendChild(searchsubtitle);
 				searchResults.forEach(function(result){
 					searchdiv.appendChild(self.buildAuctionSearchResult(result, true));
@@ -523,7 +528,7 @@
 				resultsdiv.className = "centered-div";
 				var text = document.createElement("p");
 				text.className  = "text";
-				text.innerHTML = "Non hai mai concluso un\\'asta."
+				text.innerHTML = "Non hai mai concluso un\'asta."
 				resultsdiv.appendChild(text);
 				closedDiv.appendChild(resultsdiv);
 			}else{

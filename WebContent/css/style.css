@@ -316,5 +316,7 @@ a.linkdiv {
   	
   	.topnav-container.username {
   		margin: 0;
+  		padding: 0;
+  		
   	}
 }
