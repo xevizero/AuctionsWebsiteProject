@@ -1,5 +1,6 @@
 package it.polimi.tiw.auctions.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -109,7 +110,7 @@ public class OfferDAO {
 		return code;
 	}
 	
-	public int insertOffer(int bidderId, int auctionId, float price) {
+	public int insertOffer(int bidderId, int auctionId, BigDecimal price) {
 		String query = "INSERT INTO offers (bidderid, auctionid, winner, posttime, price) VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement pstatement = null;
 		int code = 0;		
@@ -122,7 +123,7 @@ public class OfferDAO {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.from(ZoneOffset.UTC));
 			String dbTimestamp = formatter.format(time);
 			pstatement.setString(4, dbTimestamp);
-			pstatement.setFloat(5, price);
+			pstatement.setBigDecimal(5, price);
 			code = pstatement.executeUpdate();
 		} catch (SQLException e) {
 		    e.printStackTrace();
