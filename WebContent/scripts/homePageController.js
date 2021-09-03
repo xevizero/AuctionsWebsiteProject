@@ -71,7 +71,9 @@
             if (req.status == 200) {
 				visAuctionsSave = JSON.parse(req.responseText);
 				self.getWonAuctions();
-            }
+            }else{
+				window.alert("Errore: " + req.status);
+			}
 			
           } else {
 			
@@ -86,7 +88,9 @@
             if (req.status == 200) {
               var wonAuctions = JSON.parse(req.responseText);
 				self.buildBuyModeStructure(wonAuctions);
-            }
+            }else{
+				window.alert("Errore: " + req.status);
+			}
 			
           } else {
 			
@@ -106,7 +110,9 @@
 				document.getElementById("wonDiv").remove();
 				self.buildBuyModeSearchAuctions(results, null);
 				content.appendChild(oldWonDiv);			
-            }
+            }else{
+				window.alert("Errore: " + req.status);
+			}
           } else {
 	
           }
@@ -127,7 +133,9 @@
 					(results.winnerInfo == "")?null:JSON.parse(results.winnerInfo), 
 					results.todaydate, 
 					(results.auction == "")?null:JSON.parse(results.auction));
-            }
+            }else{
+				window.alert("Errore: " + req.status);
+			}
           } else {
 	
           }
@@ -148,7 +156,9 @@
 				self.getUserClosedAuctions(openAuctions);
 			}
               
-            }
+            }else{
+				window.alert("Errore: " + req.status);
+			}
 			
           } else {
 			
@@ -163,7 +173,9 @@
             if (req.status == 200) {
               var closedAuctions = JSON.parse(req.responseText);
 				self.buildSellModeStructure(openAuctions, closedAuctions);
-            }
+            }else{
+				window.alert("Errore: " + req.status);
+			}
 			
           } else {
 			
@@ -179,7 +191,9 @@
             if (req.status == 200) {
 			setCookie("lastAction"+loggedUsername, "makeOffer", 30);
               self.enterAuctionMode(auctionId);
-            }
+            }else{
+				window.alert("Errore: " + req.status);
+			}
 			
           } else {
 			
@@ -195,7 +209,9 @@
             if (req.status == 200) {
 				setCookie("lastAction"+loggedUsername, "closeAuction", 30);
 				self.enterAuctionMode(auctionId);
-            }
+            }else{
+				window.alert("Errore: " + req.status);
+			}
 			
           } else {
 			
@@ -215,7 +231,9 @@
 				document.getElementById("closedDiv").remove();
 				document.getElementById("createDiv").remove();
 				self.getUserOpenAuctions(true, oldClosedDiv, oldCreateDiv);
-            }
+            }else{
+				window.alert("Errore: " + req.status);
+			}
 			
           } else {
 			
