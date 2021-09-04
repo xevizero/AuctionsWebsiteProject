@@ -879,7 +879,8 @@
 				auctionMessage5.innerHTML = "Indirizzo: Via Celio Vibenna, 00184 Roma (RM)";
 				auctOptionsA.appendChild(auctionMessage3);
 				auctOptionsA.appendChild(auctionMessage4);
-				auctOptionsA.appendChild(auctionMessage5);
+				if(userInfo.id === auction.owner.id)
+					auctOptionsA.appendChild(auctionMessage5);
 			}
 		}
 		var divider1 = document.createElement("p");

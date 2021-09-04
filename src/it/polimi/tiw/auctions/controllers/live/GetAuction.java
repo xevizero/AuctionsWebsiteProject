@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.jasper.tagplugins.jstl.core.If;
+
 import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -92,7 +94,9 @@ public class GetAuction extends HttpServlet{
 				try {
 					List<Auction> vAuctions = new ArrayList<Auction>();
 					for (int id : auctionIds) {
-						vAuctions.add(dao1.getAuction(id));
+						Auction tempAuct = dao1.getAuction(id);
+						if(tempAuct.isActive())
+							vAuctions.add(dao1.getAuction(id));
 					}
 				    jsonResponse = gson.toJson(vAuctions);
 				}catch (Exception e) {

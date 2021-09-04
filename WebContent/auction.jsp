@@ -100,7 +100,11 @@
 					<c:otherwise>
 						<p class="text">Aggiudicatario: <c:out value="${winnerInfo.username}"/></p>
 						<p class="text">Prezzo: <c:out value="${winnerOffer.price}"/></p>
-						<p class="text">Indirizzo: Via Celio Vibenna, 00184 Roma (RM)</p>
+						<c:choose>
+							<c:when test="${userInfo.id == auction.owner.id}">
+									<p class="text">Indirizzo: Via Celio Vibenna, 00184 Roma (RM)</p>
+							</c:when>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>
